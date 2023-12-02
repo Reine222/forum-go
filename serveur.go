@@ -6,6 +6,8 @@ import (
 	"html/template"
 	"net/http"
 
+	"golang.org/x/crypto/bcrypt"
+
 	_ "github.com/mattn/go-sqlite3" // Import go-sqlite3 library
 )
 
@@ -92,11 +94,17 @@ func insertUsers(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		user_name := r.FormValue("nom")
 		user_email := r.FormValue("email")
-		user_password := r.FormValue("password")
-
-		question := "INSERT INTO T_UTILISATEUR_USER (user_name, user_email, user_password) VALUES (?,?,?,?)"
-		_, err := db.Exec(question, user_name, user_email, user_password)
+		pass := r.FormValue("password")
+		passs := []byte(pass)
+		// Hashing the password
+		user_password, err := bcrypt.GenerateFromPassword(passs, bcrypt.DefaultCost)
 		if err != nil {
+			panic(err)
+		}
+		fmt.Println(user_name, user_email, user_password)
+		register := "INSERT INTO T_UTILISATEUR_USER (user_name, user_email, user_password) VALUES (?,?,?)"
+		_, errr := db.Exec(register, user_name, user_email, user_password)
+		if errr != nil {
 			fmt.Println("Erreur lors de l'insertion dans la table users:", err)
 			return
 		}
@@ -113,7 +121,7 @@ func main() {
 	http.Handle("/", http.FileServer(http.Dir("static/"))) // gere les fichiers statics
 	http.HandleFunc("/forum", home)
 	http.HandleFunc("/register", formRegister)
-	http.HandleFunc("/post-login", insertUsers)
+	http.HandleFunc("/post_register", insertUsers)
 
 	http.HandleFunc("/login", formLogin)
 

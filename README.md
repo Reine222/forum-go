@@ -23,4 +23,6 @@ https://www.youtube.com/watch?v=wGqVjwNpBxY
 
 https://etienner.github.io/creer-une-api-res-tful-sur-go/
 
+https://dev.to/sirneij/authentication-system-using-golang-and-sveltekit-user-registration-5981
+
 

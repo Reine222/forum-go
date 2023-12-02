@@ -10,6 +10,12 @@ https://www.futurelearn.com/info/courses/data-analytics-for-business-manipulatin
 
 https://earthly.dev/blog/golang-sqlite/
 
+https://www.codeproject.com/Articles/5261771/Golang-SQLite-Simple-Example
+
+https://www.allhandsontech.com/programming/golang/how-to-use-sqlite-with-go/
+
+
+
 ## lien utiles
 https://appmaster.io/fr/blog/bases-de-donnees-en-go
 

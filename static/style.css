@@ -1,0 +1,57 @@
+body {
+    align-content: center;
+}
+form {
+    position: fixed;
+    background-color: rgb(119, 119, 119);
+    color: rgb(0, 0, 0);
+    text-align: center;
+    border-radius: 10px;
+    justify-content: center;
+    /* Cela ne s'applique pas aux éléments non flexibles */
+    z-index: 2;
+    left: 5%;
+    top: 30%;
+    width: 350px;
+    width: 350px;
+    height: auto;
+    padding: 20px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+form div {
+    min-height: 25px;
+    margin-top: 25px;
+}
+
+form div>label {
+    width: 95%;
+    /* Remplir la largeur du conteneur */
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+}
+
+form div>input {
+    background: #ffffff;
+    border: black solid 1px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: Montserrat, "sans-serif";
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25);
+}
+
+form button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+  }

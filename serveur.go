@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"time"
 
 	"golang.org/x/crypto/bcrypt"
 
@@ -52,6 +53,11 @@ type T_REACTION_REACT struct {
 
 const port = ":8080"
 
+const (
+	cookieName    = "session-cookie"
+	authenticated = "authenticated"
+)
+
 // recuperation des templates (pages html)
 var (
 	template0 = template.Must(template.ParseFiles("./template/index.html"))
@@ -69,6 +75,27 @@ func dbConn() (db *sql.DB) {
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
+	/*
+		// Vérifier si l'utilisateur est connecté en vérifiant l'existence du cookie
+		cookie, err := r.Cookie(cookieName)
+		if err != nil || cookie.Value != authenticated {
+			// Si l'utilisateur n'est pas connecté, le rediriger vers la page de connexion
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
+			return
+		}
+
+
+		// L'utilisateur est connecté, afficher la page d'accueil
+		w.Write([]byte("Bienvenue sur la page d'accueil!"))
+	*/
+	cookie, err := r.Cookie(cookieName)
+	if err != nil || cookie.Value != authenticated {
+		// Si l'utilisateur n'est pas connecté, le rediriger vers la page de connexion
+		fmt.Println("*************************** DECONNECTER ******************************")
+	} else {
+		fmt.Println("*************************** CONNECTER ******************************")
+	}
+
 	err1 := template0.Execute(w, nil) // execution de la page index.html
 	if err1 != nil {
 		http.Error(w, err1.Error(), http.StatusInternalServerError)
@@ -110,11 +137,38 @@ func insertUsers(w http.ResponseWriter, r *http.Request) {
 		}
 
 		fmt.Println("Insertion réussie !")
+		cookie, err := r.Cookie(cookieName)
+		if err != nil || cookie.Value != authenticated {
+			// Si l'utilisateur n'est pas connecté, le rediriger vers la page de connexion
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
+			return
+		}
 
 	}
 
 	defer db.Close()
 	fmt.Println("************************************** SUCCES *************************************")
+}
+
+// LoginHandler gère le processus d'authentification
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
+	// Authentification réussie, définir un cookie pour marquer l'utilisateur comme connecté
+	expiration := time.Now().Add(24 * time.Hour) // Expire dans 24 heures
+	cookie := http.Cookie{Name: cookieName, Value: authenticated, Expires: expiration}
+	http.SetCookie(w, &cookie)
+
+	// Rediriger l'utilisateur vers la page d'accueil après la connexion
+	http.Redirect(w, r, "/forum", http.StatusSeeOther)
+}
+
+// LogoutHandler gère le processus de déconnexion
+func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	// Déconnexion de l'utilisateur, supprimer le cookie
+	cookie := http.Cookie{Name: cookieName, Value: "", Expires: time.Now().Add(-time.Hour)}
+	http.SetCookie(w, &cookie)
+
+	// Rediriger l'utilisateur vers la page d'accueil après la déconnexion
+	http.Redirect(w, r, "/forum", http.StatusSeeOther)
 }
 
 func main() {
@@ -124,6 +178,8 @@ func main() {
 	http.HandleFunc("/post_register", insertUsers)
 
 	http.HandleFunc("/login", formLogin)
+	http.HandleFunc("/post_login", LoginHandler)
+	http.HandleFunc("/logout", LogoutHandler)
 
 	fmt.Println("click sur le lien suivant : http://localhost:8080/forum")
 	http.ListenAndServe(port, nil)

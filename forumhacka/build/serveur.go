@@ -251,7 +251,7 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, &cookie)
 
 	// Rediriger l'utilisateur vers la page d'accueil après la déconnexion
-	http.Redirect(w, r, "/forum", http.StatusSeeOther)
+	http.Redirect(w, r, "/forum0", http.StatusSeeOther)
 }
 
 func formPublication(w http.ResponseWriter, r *http.Request) {

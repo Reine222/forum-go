@@ -68,51 +68,51 @@
         </div>
     </div>
 </header>
-<main id="tt-pageContent" class="tt-offset-small">
+<main id="tt-pageContent">
     <div class="container">
-        <div class="tt-topic-list">
-            <div class="tt-list-header">
-                <div class="tt-col-topic">Publication</div>
-                <div class="tt-col-value">Activité</div>
-            </div>
-           
-            {{ range .data }}
-            
+        <div class="tt-single-topic-list">
             <div class="tt-item">
-                <div class="tt-col-avatar">
-                    <svg class="tt-icon">
-                      <use xlink:href="#icon-ava-n"></use>
-                    </svg>
-                    <h6 style="font-size: 13px; margin-left: -10px;" class="tt-title">User {{.User_id.User_id}}</h6>
-                </div>
-                <div class="tt-col-description">
-                    <h6 class="tt-title"><a href="/detail-post0?posts={{ .Post_id }}">
-                        {{.Post_title}}
-                    </a></h6>
-                    <div class="row align-items-center no-gutters  hide-desktope">
-                        <div class="col-11">
-                            <ul class="tt-list-badge">
-                                <li class="show-mobile"><a href="#"><span class="tt-color05 tt-badge">music</span></a></li>
-                            </ul>
+                 <div class="tt-single-topic">
+                    <div class="tt-item-header">
+                        <div class="tt-item-info info-top">
+                            <div class="tt-avatar-icon">
+                                <i class="tt-icon"><svg><use xlink:href="#icon-ava-d"></use></svg></i>
+                            </div>
+                            <div class="tt-avatar-title">
+                               <a href="#">User {{ .data.User_id.User_id }}</a>
+                            </div>
+                            <a href="#" class="tt-info-time">
+                                <i class="tt-icon"><svg><use xlink:href="#icon-time"></use></svg></i>{{ .data.Post_date }}
+                            </a>
                         </div>
-                        <div class="col-1 ml-auto show-mobile">
-                            <div class="tt-value">1d</div>
-                        </div>
+                        <h3 class="tt-item-title">
+                            <a href="#">{{ .data.Post_title }}</a>
+                        </h3>
+                       
                     </div>
+                    <div class="tt-item-description">
+                        <p>
+                            {{ .data.Post_description }}
+                        </p>
+                       
+
+                    </div>
+                   
                 </div>
-                <div class="tt-col-value hide-mobile">{{.Post_date}}</div>
             </div>
-
-            {{ end }}
-        </div>
-    </div>
-
-    <br><br><br>
+            
+<br><br><br>
 </main>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
-
-
+<script>
+    $(document).ready(function() {
+        $('#showFormButton').on('click', function() {
+            $('#responseForm').toggle(); // Affiche ou cache le formulaire au clic sur le bouton
+        });
+    });
+    
+</script>
 </body>
 </html>

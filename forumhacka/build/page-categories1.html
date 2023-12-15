@@ -68,51 +68,24 @@
         </div>
     </div>
 </header>
-<main id="tt-pageContent" class="tt-offset-small">
-    <div class="container">
-        <div class="tt-topic-list">
-            <div class="tt-list-header">
-                <div class="tt-col-topic">Publication</div>
-                <div class="tt-col-value">Activité</div>
-            </div>
-           
+<main id="tt-pageContent">
+    <div class="tt-custom-mobile-indent container">
+        <div class="tt-categories-list">
+            <div class="row">
             {{ range .data }}
-            
-            <div class="tt-item">
-                <div class="tt-col-avatar">
-                    <svg class="tt-icon">
-                      <use xlink:href="#icon-ava-n"></use>
-                    </svg>
-                    <h6 style="font-size: 13px; margin-left: -10px;" class="tt-title">User {{.User_id.User_id}}</h6>
-                </div>
-                <div class="tt-col-description">
-                    <h6 class="tt-title"><a href="/detail-post0?posts={{ .Post_id }}">
-                        {{.Post_title}}
-                    </a></h6>
-                    <div class="row align-items-center no-gutters  hide-desktope">
-                        <div class="col-11">
-                            <ul class="tt-list-badge">
-                                <li class="show-mobile"><a href="#"><span class="tt-color05 tt-badge">music</span></a></li>
-                            </ul>
-                        </div>
-                        <div class="col-1 ml-auto show-mobile">
-                            <div class="tt-value">1d</div>
+                <div class="col-lg-3">
+                    <div style="background: #4436f8; width: 190px; height: 90px;" class="tt-item">
+                        <div style="font-size: 20px; color: #ffffff; text-align: center;" class="tt-item-header">
+                            {{.Cat_name}}
                         </div>
                     </div>
                 </div>
-                <div class="tt-col-value hide-mobile">{{.Post_date}}</div>
-            </div>
-
             {{ end }}
+            </div>
         </div>
     </div>
-
     <br><br><br>
 </main>
-
-
-
-
 
 </body>
 </html>

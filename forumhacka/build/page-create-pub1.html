@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Forum - Responsive HTML5 Template</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Forum - Responsive HTML5 Template">
+    <meta name="author" content="Forum">
+    <link rel="shortcut icon" href="favicon/favicon.ico">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- tt-mobile menu -->
+<nav class="panel-menu" id="mobile-menu">
+    <ul>
+
+    </ul>
+    <div class="mm-navbtn-names">
+        <div class="mm-closebtn">
+            Close
+            <div class="tt-icon">
+                <svg>
+                  <use xlink:href="#icon-cancel"></use>
+                </svg>
+            </div>
+        </div>
+        <div class="mm-backbtn">Back</div>
+    </div>
+</nav>
+<header id="tt-header">
+    <div class="container">
+        <div class="row tt-row no-gutters">
+            <div class="col-auto">
+                <!-- toggle mobile menu -->
+                <a class="toggle-mobile-menu" href="#">
+                    <svg class="tt-icon">
+                      <use xlink:href="#icon-menu_icon"></use>
+                    </svg>
+                </a>
+                <!-- /toggle mobile menu -->
+                <!-- logo -->
+                <div class="tt-logo">
+                    <a href="/forum0"><img src="images/logo.png" alt=""></a>
+                </div>
+                <!-- /logo -->
+                <!-- desctop menu -->
+                 <div class="tt-desktop-menu">
+                    <nav>
+                        <ul>
+                            <li><a href="/categorie0"><span>Categories</span></a></li>
+                            <li><a href="/forum0"><span>Accueil</span></a></li>
+                            
+                        </ul>
+                    </nav>
+                </div>
+                <!-- /desctop menu -->
+               
+            </div>
+            <div class="col-auto ml-auto">
+                <div class="tt-account-btn">
+                    <a href="/register" class="btn btn-primary">S'inscrire</a>
+                    <a href="/login" class="btn btn-secondary">Se connecter</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<main id="tt-pageContent">
+    <div class="container">
+        <div class="tt-wrapper-inner">
+            <h1 class="tt-title-border">
+                Créer Une nouvelle publication
+            </h1>
+            <form action="/post_publication" method="post" class="form-default form-create-topic">
+                <div class="form-group">
+                    <label for="inputTopicTitle">Titre</label>
+                    <div class="tt-value-wrapper">
+                        <input type="text" name="titre" class="form-control" id="inputTopicTitle" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Catégories</label>
+                    <div class="tt-js-active-btn tt-wrapper-btnicon">
+                        <div class="row tt-w410-col-02">
+                            <div class="col-4 col-lg-3 col-xl-2">
+                                <a href="#" class="tt-button-icon" data-category="Discussion">
+                                    <span class="tt-icon">
+                                        <svg><use xlink:href="#icon-discussion"></use></svg>
+                                    </span>
+                                    <span class="tt-text">Discussion</span>
+                                </a>
+                            </div>
+                            <div class="col-4 col-lg-3 col-xl-2">
+                               <a href="#" class="tt-button-icon" data-category="Question">
+                                    <span class="tt-icon">
+                                         <svg>
+                                            <use xlink:href="#Question"></use>
+                                        </svg>
+                                    </span>
+                                    <span class="tt-text">Question</span>
+                                </a>
+                            </div>
+                            <div class="col-4 col-lg-3 col-xl-2">
+                               <a href="#" class="tt-button-icon" data-category="Poll">
+                                    <span class="tt-icon">
+                                         <svg>
+                                            <use xlink:href="#Poll"></use>
+                                        </svg>
+                                    </span>
+                                    <span class="tt-text">Poll</span>
+                                </a>
+                            </div>
+                            <div class="col-4 col-lg-3 col-xl-2">
+                               <a href="#" class="tt-button-icon" data-category="Gallery">
+                                    <span class="tt-icon">
+                                         <svg>
+                                            <use xlink:href="#icon-gallery"></use>
+                                        </svg>
+                                    </span>
+                                    <span class="tt-text">Gallery</span>
+                                </a>
+                            </div>
+                            <div class="col-4 col-lg-3 col-xl-2">
+                               <a href="#" class="tt-button-icon" data-category="Video">
+                                    <span class="tt-icon">
+                                         <svg>
+                                            <use xlink:href="#Video"></use>
+                                        </svg>
+                                    </span>
+                                    <span class="tt-text">Video</span>
+                                </a>
+                            </div>
+                            <div class="col-4 col-lg-3 col-xl-2">
+                               <a href="#" class="tt-button-icon" data-category="Other">
+                                    <span class="tt-icon">
+                                         <svg>
+                                            <use xlink:href="#Others"></use>
+                                        </svg>
+                                    </span>
+                                    <span class="tt-text">Other</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="selectedCategories">Catégories sélectionnées</label>
+                    <input name="catego" type="text" id="selectedCategories" class="form-control" readonly>
+                </div>
+                
+                <div class="pt-editor">
+                    <h6 class="pt-title">Description</h6>
+                    <div class="pt-row">
+                        <div class="col-left">
+                            <ul class="pt-edit-btn">
+                                <li><button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                      <use xlink:href="#icon-quote"></use>
+                                    </svg>
+                                </button></li>
+                                <li><button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                      <use xlink:href="#icon-bold"></use>
+                                    </svg>
+                                </button></li>
+                                <li><button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                      <use xlink:href="#icon-italic"></use>
+                                    </svg>
+                                </button></li>
+                                <li><button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                      <use xlink:href="#icon-share_topic"></use>
+                                    </svg>
+                                </button></li>
+                                <li><button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                      <use xlink:href="#icon-blockquote"></use>
+                                    </svg>
+                                </button></li>
+                                <li><button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                      <use xlink:href="#icon-performatted"></use>
+                                    </svg>
+                                </button></li>
+                                <li class="hr"></li>
+                                <li><button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                      <use xlink:href="#icon-upload_files"></use>
+                                    </svg>
+                                </button></li>
+                                <li><button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                      <use xlink:href="#icon-bullet_list"></use>
+                                    </svg>
+                                </button></li>
+                                <li><button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                      <use xlink:href="#icon-heading"></use>
+                                    </svg>
+                                </button></li>
+                                <li><button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                      <use xlink:href="#icon-horizontal_line"></use>
+                                    </svg>
+                                </button></li>
+                                <li><button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                      <use xlink:href="#icon-emoticon"></use>
+                                    </svg>
+                                </button></li>
+                                <li><button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                      <use xlink:href="#icon-settings"></use>
+                                    </svg>
+                                </button></li>
+                                <li><button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                      <use xlink:href="#icon-color_picker"></use>
+                                    </svg>
+                                </button></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="content" class="form-control" rows="5" placeholder="Lets get started"></textarea>
+                    </div>
+                     <div class="row">
+                        <div class="col-auto ml-md-auto">
+                            <button class="btn btn-secondary btn-width-lg" type="submit">Soumetre la publication</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+
+    <br><br><br>
+</main>
+
+<script src="js/bundle.js"></script>
+
+<script>
+    $(document).ready(function() {
+// Au clic sur une icône
+$('.tt-button-icon').on('click', function(e) {
+e.preventDefault(); // Empêche le lien de se déclencher
+
+// Récupère la catégorie de l'attribut 'data-category'
+var category = $(this).data('category');
+
+// Récupère le champ des catégories sélectionnées
+var selectedCategories = $('#selectedCategories');
+
+// Récupère les catégories déjà sélectionnées
+var currentCategories = selectedCategories.val();
+
+// Vérifie si le champ est vide ou non
+if (currentCategories === '') {
+// Si le champ est vide, ajoute simplement la catégorie
+selectedCategories.val(category);
+} else {
+// Sinon, ajoute la catégorie avec une virgule et un espace
+selectedCategories.val(currentCategories + ', ' + category);
+}
+});
+});
+
+
+ </script>
+</body>
+</html>

@@ -41,53 +41,34 @@
                        <a href="page-inscription.html">Inscrivez vous</a> pour intégrer notre communauté.
                     </div>
                 <br>
-                <form class="form-default">
+                <form action="/post_register" method="post" class="form-default">
                     <div class="form-group">
                         <label for="loginUserName">Nom</label>
-                        <input type="text" name="name" class="form-control" id="loginUserName" placeholder="entrez votre Nom">
+                        <input type="text" name="nom" class="form-control" id="loginUserName" placeholder="entrez votre Nom">
                     </div>
                     <div class="form-group">
                         <label for="loginUserEmail">Email</label>
-                        <input type="email" name="name" class="form-control" id="loginUserName" placeholder="entrez votre email">
+                        <input type="email" id="email" class="form-control" id="loginUserName" placeholder="entrez votre email">
                     </div>
                     <div class="form-group">
                         <label for="loginUserPassword">Mot de passe</label>
-                        <input type="password" name="name" class="form-control" id="loginUserPassword" placeholder="************">
+                        <input type="password" name="password" class="form-control" id="loginUserPassword" placeholder="************">
                     </div>
                     <div class="form-group">
                         <label for="loginUserPassword">Confirmer mot de passe</label>
-                        <input type="password" name="name" class="form-control" id="loginUserPassword" placeholder="************">
+                        <input type="password" name="repassword" class="form-control" id="loginUserPassword" placeholder="************">
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="settingsCheckBox01" name="checkbox">
-                                    <label for="settingsCheckBox01">
-                                        <span class="check"></span>
-                                        <span class="box"></span>
-                                        <span class="tt-text">Se souvenir </span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col ml-auto text-right">
-                            <a href="#" class="tt-underline">Mot de passe oublié</a>
-                        </div>
-                    </div>
+                    
                     <div class="form-group">
-                        <a href="#" class="btn btn-secondary btn-block">s'inscrire</a>
+                        <button class="btn btn-secondary btn-block" type="submit">S'inscrire</button>
                     </div>
-                    <p>Vous avez déja un compte? <a href="page-connexion.html" class="tt-underline">connectez-vous</a></p>
-                    <div class="tt-notes">
-                        Je suis d'accord avec <a href="#" class="tt-underline">Les temps</a> et <a href="#" class="tt-underline">Confidentialité</a>
-                    </div>
+                    <p>Vous avez déja un compte? <a href="/login" class="tt-underline">connectez-vous</a></p>
+                    
                 </form>
             </div>
         </div>
     </div>
 </main>
 <script src="js/bundle.js"></script>
-
 </body>
 </html>

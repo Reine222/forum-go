@@ -37,23 +37,21 @@
                     <div class="tt-title">
                         Se connecter
                     </div>
-                <form class="form-default">
+                <form action="/post_login" method="post" class="form-default">
                     <div class="form-group">
                         <label for="loginUserEmail">Email</label>
-                        <input type="text" name="name" class="form-control" id="loginUserEmail" placeholder="Sample@sample.com">
+                        <input type="text" name="email" class="form-control" id="loginUserEmail" placeholder="Sample@sample.com">
                     </div>
                     <div class="form-group">
                         <label for="loginUserPassword">Mot de passe </label>
-                        <input type="password" name="name" class="form-control" id="loginUserPassword" placeholder="************">
+                        <input type="password" name="password" class="form-control" id="loginUserPassword" placeholder="************">
                     </div>
                     <div class="form-group">
-                        <a href="#" class="btn btn-secondary btn-block">Se connecter</a>
+                        <button class="btn btn-secondary btn-block" type="submit">Se connecter</button>
                     </div>
                     
-                    <p>Vous n'avez pas de compte? <a href="page-inscription.html" class="tt-underline">Inscrivez vous</a></p>
-                    <div class="tt-notes">
-                        Je suis d'accord avec <a href="#" class="tt-underline">Les termes</a> et <a href="#" class="tt-underline">Confidentialité</a>
-                    </div>
+                    <p>Vous n'avez pas de compte? <a href="/register" class="tt-underline">Inscrivez vous</a></p>
+                    
                 </form>
             </div>
         </div>

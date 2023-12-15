@@ -42,16 +42,21 @@
                 <!-- /toggle mobile menu -->
                 <!-- logo -->
                 <div class="tt-logo">
-                    <a href="/forum0"><img src="images/logo.png" alt=""></a>
+                    <a href="/forum"><img src="images/logo.png" alt=""></a>
                 </div>
                 <!-- /logo -->
                 <!-- desctop menu -->
                  <div class="tt-desktop-menu">
                     <nav>
                         <ul>
-                            <li><a href="/categorie0"><span>Categories</span></a></li>
-                            <li><a href="/forum0"><span>Accueil</span></a></li>
+                            <li><a href="/categorie"><span>Categories</span></a></li>
+                            <li><a href="/forum"><span>Accueil</span></a></li>
+                            {{if ne .cookie.Value "authenticated" }}
+                            {{else}}
+                                <li><a href="/creat-publication"><span>New Publication</span></a></li>
+                            {{end}}
                             
+                           
                         </ul>
                     </nav>
                 </div>
@@ -60,14 +65,19 @@
             </div>
             <div class="col-auto ml-auto">
                 <div class="tt-account-btn">
+                {{if ne .cookie.Value "authenticated" }}
                     <a href="/register" class="btn btn-primary">S'inscrire</a>
                     <a href="/login" class="btn btn-secondary">Se connecter</a>
-
+                {{else}}
+                    <a href="/creat-publication" class="btn btn-secondary">Creer publication</a>
+                    <a href="/logout" class="btn btn-secondary">Deconnection</a>
+                {{end}}
                 </div>
             </div>
         </div>
     </div>
 </header>
+
 <main id="tt-pageContent" class="tt-offset-small">
     <div class="container">
         <div class="tt-topic-list">
@@ -86,7 +96,7 @@
                     <h6 style="font-size: 13px; margin-left: -10px;" class="tt-title">User {{.User_id.User_id}}</h6>
                 </div>
                 <div class="tt-col-description">
-                    <h6 class="tt-title"><a href="/detail-post0?posts={{ .Post_id }}">
+                    <h6 class="tt-title"><a href="/detail-post?posts={{ .Post_id }}">
                         {{.Post_title}}
                     </a></h6>
                     <div class="row align-items-center no-gutters  hide-desktope">

@@ -39,6 +39,8 @@ type T_PUBLICATION_POST struct {
 	Post_title       string
 	Post_date        string
 	Post_description string
+	Cat_id           int
+    Cat_name         string
 	User_id          T_UTILISATEUR_USER
 }
 
@@ -124,22 +126,21 @@ func home(w http.ResponseWriter, r *http.Request) {
 	// selDB, err := db.Query("SELECT * FROM T_PUBLICATION_POST ORDER BY post_id DESC")
 	selDB, err := db.Query(`
 		SELECT 
-			T_CATEGORIEPUB_CATPUB.Catpub_id,
-			T_CATEGORY_CAT.Cat_id,
-			T_CATEGORY_CAT.Cat_name,
 			T_PUBLICATION_POST.Post_id,
 			T_PUBLICATION_POST.Post_title,
 			T_PUBLICATION_POST.Post_date,
 			T_PUBLICATION_POST.Post_description,
+			T_CATEGORY_CAT.Cat_id,
+			T_CATEGORY_CAT.Cat_name,
 			T_UTILISATEUR_USER.User_id,
 			T_UTILISATEUR_USER.User_name,
 			T_UTILISATEUR_USER.User_email,
 			T_UTILISATEUR_USER.User_password
 		FROM 
-			T_CATEGORIEPUB_CATPUB
-		INNER JOIN T_CATEGORY_CAT ON T_CATEGORY_CAT.Cat_id = T_CATEGORIEPUB_CATPUB.Cat_id
-		INNER JOIN T_PUBLICATION_POST ON T_PUBLICATION_POST.Post_id = T_CATEGORIEPUB_CATPUB.Post_id
-		INNER JOIN T_UTILISATEUR_USER ON T_PUBLICATION_POST.User_id = T_UTILISATEUR_USER.User_id;
+			T_PUBLICATION_POST
+			INNER JOIN T_CATEGORIEPUB_CATPUB ON T_PUBLICATION_POST.Post_id = T_CATEGORIEPUB_CATPUB.Post_id
+			INNER JOIN T_CATEGORY_CAT ON T_CATEGORY_CAT.Cat_id = T_CATEGORIEPUB_CATPUB.Cat_id
+			INNER JOIN T_UTILISATEUR_USER ON T_PUBLICATION_POST.User_id = T_UTILISATEUR_USER.User_id;
 	`)
 	if err != nil {
 		fmt.Println("Erreur lors de l'exécution de la requête:", err)
@@ -147,22 +148,21 @@ func home(w http.ResponseWriter, r *http.Request) {
 	}
 	defer selDB.Close()
 
-	all_pub := []T_CATEGORIEPUB_CATPUB{}
+	all_pub := []T_PUBLICATION_POST{}
 
 	for selDB.Next() {
-		var post T_CATEGORIEPUB_CATPUB
+		var post T_PUBLICATION_POST
 		err := selDB.Scan(
-			&post.Catpub_id,
-			&post.Cat_id.Cat_id,
-			&post.Cat_id.Cat_name,
-			&post.Post_id.Post_id,
-			&post.Post_id.Post_title,
-			&post.Post_id.Post_date,
-			&post.Post_id.Post_description,
-			&post.Post_id.User_id.User_id,
-			&post.Post_id.User_id.User_name,
-			&post.Post_id.User_id.User_email,
-			&post.Post_id.User_id.User_password,
+			&post.Post_id,
+			&post.Post_title,
+			&post.Post_date,
+			&post.Post_description,
+			&post.Cat_id,
+			&post.Cat_name,
+			&post.User_id.User_id,
+			&post.User_id.User_name,
+			&post.User_id.User_email,
+			&post.User_id.User_password,
 		)
 		if err != nil {
 			fmt.Println("Erreur lors du Scan:", err)
@@ -340,9 +340,12 @@ func formPublication(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("*************************** DECONNECTER ******************************")
 	}
 
+	all_cat, _ := getAllCat()
+
 	m := map[string]interface{}{
 		"isAuthenticated": isAuthenticated,
 		"user": recup_user,
+		"all_cat": all_cat,
 	}
 	err1 := template3.Execute(w, m) // execution de la page index.html
 	if err1 != nil {
@@ -367,45 +370,72 @@ func datePub() string {
 }
 
 func insertPublication(w http.ResponseWriter, r *http.Request) {
-	// Vérifier si la méthode HTTP est POST
-	if r.Method == "POST" {
-		// Récupérer les valeurs du formulaire
-		titre := r.FormValue("titre")
-		description := r.FormValue("content")
-		date := datePub()
-		categories := r.FormValue("catego")
-		user_email := r.Header.Get("x-email")
-		fmt.Println("///////////////////////////////////////////////", titre, description, date, categories, user_email)
-		// Se connecter à la base de données
-		db := dbConn()
-		/*
-			// Insérer la publication dans la table T_PUBLICATION_POST
-			postQuery := "INSERT INTO T_PUBLICATION_POST (titre, date, description, foreign_key_col) VALUES (?, ?, ?, ?)"
-			result, err := db.Exec(postQuery, titre, date, description, userID)
-			if err != nil {
-				fmt.Println("Erreur lors de l'insertion dans la table T_PUBLICATION_POST:", err)
-				http.Error(w, "Erreur lors de l'insertion dans la table T_PUBLICATION_POST", http.StatusInternalServerError)
-				return
+	db := dbConn()
+	session, _ := store.Get(r, "session.id")
+	fmt.Println("--------------------hh--------------------", session.Values["authenticated"])
+
+	// Obtenir la date actuelle et l'heure
+	// Formater la date pour l'afficher de manière lisible
+	currentTime := time.Now()
+	formattedDate := currentTime.Format("02 January 2006, 15:04:05")
+	
+	if (session.Values["authenticated"] != nil) && session.Values["authenticated"] != false {
+
+		userEmail := session.Values["user"].(string) // Assurez-vous d'adapter cela à votre implémentation
+		recup_user, _ := getUserByEmail(db, userEmail)
+
+		fmt.Println("*************************** CONNECTER ******************************", recup_user)
+	
+		if r.Method == "POST" {
+			post_title := r.FormValue("titre")
+			post_description := r.FormValue("post")
+			post_date := formattedDate
+			user_id := recup_user.User_id
+			selectedCat := r.Form["selectedCat"]
+			fmt.Println(post_title, post_description, selectedCat)
+
+			if len(post_description) > 0 &&  len(post_title) > 0{
+				
+				publication := "INSERT INTO T_PUBLICATION_POST (post_title, post_date, post_description, user_id) VALUES (?,?,?,?)"
+				result, errr := db.Exec(publication, post_title, post_date, post_description, user_id)
+				if errr != nil {
+					fmt.Println("Erreur lors de l'insertion dans la table users:", errr)
+					return
+				}
+				fmt.Println("Insertion réussie 111 !")
+
+				// Récupérer l'ID de la dernière insertion
+					postID, errp := result.LastInsertId()
+					if errp != nil {
+						// Handle the error
+						fmt.Println("Error getting LastInsertId:", errp)
+						return
+					}
+					post_id := int(postID)
+
+				for _, val := range selectedCat {
+					cat_id, _ := strconv.Atoi(val)
+
+					cat_pub := "INSERT INTO T_CATEGORIEPUB_CATPUB (cat_id, post_id) VALUES (?,?)"
+					_, errr1 := db.Exec(cat_pub, cat_id, post_id)
+					if errr1 != nil {
+						fmt.Println("Erreur lors de l'insertion dans la table users:", errr)
+						return
+					}
+
+					fmt.Println("Insertion réussie 222 !")
+				}
+				
+				
+				defer db.Close()
+				fmt.Println("************************************** SUCCES *************************************")
+
 			}
 
-			// Récupérer l'ID de la publication insérée
-			postID, _ := result.LastInsertId()
-
-			// Insérer la relation Many-to-Many dans la table T_CATEGORIEPUB_CATPUB
-			catQuery := "INSERT INTO T_CATEGORIEPUB_CATPUB (cat_id, post_id) VALUES ((SELECT id FROM T_CATEGORY_CAT WHERE id = ?), ?)"
-			_, err = db.Exec(catQuery, catID, postID)
-			if err != nil {
-				fmt.Println("Erreur lors de l'insertion dans la table T_CATEGORIEPUB_CATPUB:", err)
-				http.Error(w, "Erreur lors de l'insertion dans la table T_CATEGORIEPUB_CATPUB", http.StatusInternalServerError)
-				return
-			}
-		*/
-		fmt.Println("Insertion réussie !")
-
-		defer db.Close()
-		fmt.Println("************************************** SUCCES *************************************")
-		http.Redirect(w, r, "/forum", 302)
+			http.Redirect(w, r, "/forum", http.StatusSeeOther)
+		}
 	}
+
 }
 
 func affichCat(w http.ResponseWriter, r *http.Request) {
@@ -535,6 +565,38 @@ func getCommentByPostID(postID int) ([]T_COMMENTAIRE_COMMENT, error) {
 }
 
 
+func getAllCat() ([]T_CATEGORY_CAT, error) {
+	db := dbConn()
+
+	rows, err := db.Query("SELECT T_CATEGORY_CAT.cat_id, T_CATEGORY_CAT.cat_name FROM T_CATEGORY_CAT")
+	if err != nil {
+		fmt.Println("Error querying comments:", err)
+		return nil, err
+	}
+	defer rows.Close()
+
+	var allCat []T_CATEGORY_CAT
+
+	for rows.Next() {
+		var catego T_CATEGORY_CAT
+		err := rows.Scan(
+			&catego.Cat_id, &catego.Cat_name,
+		)
+		if err != nil {
+			fmt.Println("Error scanning allCat row:", err)
+			return nil, err
+		}
+		allCat = append(allCat, catego)
+	}
+
+	if err := rows.Err(); err != nil {
+		fmt.Println("Error retrieving allCat:", err)
+		return nil, err
+	}
+
+	return allCat, nil
+}
+
 
 func detailPublication(w http.ResponseWriter, r *http.Request) {
 	isAuthenticated := false
@@ -565,6 +627,7 @@ func detailPublication(w http.ResponseWriter, r *http.Request) {
 	post, err := getPostByID(id_post)
 	catpost, errc := getCategoryByID(db, id_cat)
 	comments, errcom := getCommentByPostID(id_post)
+	
 	if err != nil && errc != nil && errcom != nil {
 		fmt.Println(err)
 	}

@@ -92,11 +92,11 @@
                     <svg class="tt-icon">
                       <use xlink:href="#icon-ava-n"></use>
                     </svg>
-                    <h6 style="font-size: 13px; margin-left: -10px;" class="tt-title">{{.Post_id.User_id.User_name}}</h6>
+                    <h6 style="font-size: 13px; margin-left: -10px;" class="tt-title">{{.User_id.User_name}}</h6>
                 </div>
                 <div class="tt-col-description">
-                    <h6 class="tt-title"><a href="/detail-post?posts={{ .Post_id.Post_id }}&cat={{ .Cat_id.Cat_id }}">
-                        {{.Post_id.Post_title}}
+                    <h6 class="tt-title"><a href="/detail-post?posts={{ .Post_id }}&cat={{ .Cat_id }}">
+                        {{.Post_title}}
                     </a></h6>
                    
                 </div>
@@ -104,12 +104,12 @@
                     <div class="row align-items-center no-gutters  hide-mobile">
                         <div class="col-11">
                             <ul class="tt-list-badge">
-                                <li class="show-desktope"><a href="/detail-categorie-post?cat={{ .Cat_id.Cat_id }}"><span class="tt-color05 tt-badge">{{.Cat_id.Cat_name}}</span></a></li>
+                                <li class="show-desktope"><a href="/detail-categorie-post?cat={{ .Cat_id }}"><span class="tt-color05 tt-badge">{{.Cat_name}}</span></a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class="tt-col-value hide-mobile">{{.Post_id.Post_date}}</div>
+                <div class="tt-col-value hide-mobile">{{.Post_date}}</div>
             </div>
 
             {{ end }}

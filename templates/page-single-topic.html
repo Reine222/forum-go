@@ -113,8 +113,10 @@
                         <p>{{ .Comment_description }} <span>Auteur : {{ .User_id.User_name }}</span> <span>Date : {{ .Comment_date }}</span></p>
                         {{ end }}
 
-
+                        {{if .isAuthenticated }}
                         <button id="showFormButton">Repondre</button>
+                        {{end}}
+                        
                         <form id="responseForm" style="display: none;" action="/post_comment?post={{ .data.Post_id }}&cat={{ .catpost.Cat_id }}" method="post">
                             <div class="form-group">
                                 <label for="com">Message</label>

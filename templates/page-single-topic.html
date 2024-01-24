@@ -10,6 +10,7 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="css/style.css">
+        
     </head>
 <body>
 <!-- tt-mobile menu -->
@@ -83,7 +84,7 @@
                         <div class="row align-items-center no-gutters  hide-mobile">
                             <div class="col-11">
                                 <ul class="tt-list-badge">
-                                    <li class="show-desktope"><a href="/detail-categorie-post?cat={{ .catpost.Cat_id }}"><span class="tt-color05 tt-badge">{{.catpost.Cat_name}}</span></a></li>
+                                    <li class="show-desktope"><a href="/detail-categorie-post?cat={{ .catpost.Cat_id }}"><span class="tt-color0{{ .catpost.Cat_id }} tt-badge">{{.catpost.Cat_name}}</span></a></li>
                                 </ul>
                             </div>
                         </div> <br><br>
@@ -120,7 +121,9 @@
                         <form id="responseForm" style="display: none;" action="/post_comment?post={{ .data.Post_id }}&cat={{ .catpost.Cat_id }}" method="post">
                             <div class="form-group">
                                 <label for="com">Message</label>
-                                <textarea id="com" name="comment" class="form-control" rows="5" placeholder="Lets get started"></textarea>
+                                <div class="form-group">
+                                    <textarea name="comment" class="form-control" rows="5" placeholder="Lets get started"></textarea>
+                                </div>
                             </div>
                             <button type="submit">Envoyer</button>
                         </form>
@@ -134,6 +137,7 @@
 </main>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 <script>
     $(document).ready(function() {

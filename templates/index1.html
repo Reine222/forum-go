@@ -80,8 +80,9 @@
     <div class="container">
         <div class="tt-topic-list">
             <div class="tt-list-header">
-                <div class="tt-col-topic">Publications</div>
-                <div class="tt-col-topi">Categories</div>
+
+                <div class="tt-col-topic">Auteur</div>
+                <div class="tt-col-value hide-mobile">Categories</div>
                 <div class="tt-col-value">Dates</div>
             </div>
            
@@ -104,13 +105,14 @@
                     <div class="row align-items-center no-gutters  hide-mobile">
                         <div class="col-11">
                             <ul class="tt-list-badge">
-                                <li class="show-desktope"><a href="/detail-categorie-post?cat={{ .Cat_id }}"><span class="tt-color05 tt-badge">{{.Cat_name}}</span></a></li>
+                                <li class="show-desktope"><a href="/detail-categorie-post?cat={{ .Cat_id }}"><span class="tt-color0{{ .Cat_id }} tt-badge">{{.Cat_name}}</span></a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="tt-col-value hide-mobile">{{.Post_date}}</div>
             </div>
+            
 
             {{ end }}
         </div>

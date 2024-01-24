@@ -1,16 +1,16 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Forum - Responsive HTML5 Template</title>
-    <meta name="keywords" content="HTML5 Template">
-    <meta name="description" content="Forum - Responsive HTML5 Template">
-    <meta name="author" content="Forum">
-    <link rel="shortcut icon" href="favicon/favicon.ico">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="css/style.css">
-</head>
+    <head>
+        <meta charset="utf-8">
+        <title>Forum - Responsive HTML5 Template</title>
+        <meta name="keywords" content="HTML5 Template">
+        <meta name="description" content="Forum - Responsive HTML5 Template">
+        <meta name="author" content="Forum">
+        <link rel="shortcut icon" href="favicon/favicon.ico">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
 <body>
 <!-- tt-mobile menu -->
 <nav class="panel-menu" id="mobile-menu">
@@ -36,33 +36,39 @@
                 <!-- toggle mobile menu -->
                 <a class="toggle-mobile-menu" href="#">
                     <svg class="tt-icon">
-                      <use xlink:href="#icon-menu_icon"></use>
+                    <use xlink:href="#icon-menu_icon"></use>
                     </svg>
                 </a>
                 <!-- /toggle mobile menu -->
                 <!-- logo -->
                 <div class="tt-logo">
-                    <a href="/forum0"><img src="images/logo.png" alt=""></a>
+                    <a href="/forum"><img src="images/logo.png" alt=""></a>
                 </div>
                 <!-- /logo -->
                 <!-- desctop menu -->
-                 <div class="tt-desktop-menu">
+                <div class="tt-desktop-menu">
                     <nav>
                         <ul>
-                            <li><a href="/categorie0"><span>Categories</span></a></li>
-                            <li><a href="/forum0"><span>Accueil</span></a></li>
-                            
+                            <li><a href="/forum"><span>Accueil</span></a></li>
+                            <li><a href="/categorie"><span>Categories</span></a></li>
                         </ul>
                     </nav>
                 </div>
                 <!-- /desctop menu -->
-               
+            
             </div>
             <div class="col-auto ml-auto">
                 <div class="tt-account-btn">
+                {{if .isAuthenticated }}
+                    <a href="/creat-publication" class="btn btn-secondary">Creer publication</a>
+                    <p style="color: black;">{{.user.User_name}}</p>
+                    <a href="/logout" class="btn btn-secondary">Deconnexion</a>
+                {{else}}
+                    
                     <a href="/register" class="btn btn-primary">S'inscrire</a>
                     <a href="/login" class="btn btn-secondary">Se connecter</a>
 
+                {{end}}
                 </div>
             </div>
         </div>
@@ -74,12 +80,20 @@
             <div class="tt-item">
                  <div class="tt-single-topic">
                     <div class="tt-item-header">
+                        <div class="row align-items-center no-gutters  hide-mobile">
+                            <div class="col-11">
+                                <ul class="tt-list-badge">
+                                    <li class="show-desktope"><a href="/detail-categorie-post?cat={{ .catpost.Cat_id }}"><span class="tt-color05 tt-badge">{{.catpost.Cat_name}}</span></a></li>
+                                </ul>
+                            </div>
+                        </div> <br><br>
                         <div class="tt-item-info info-top">
+                            
                             <div class="tt-avatar-icon">
                                 <i class="tt-icon"><svg><use xlink:href="#icon-ava-d"></use></svg></i>
                             </div>
                             <div class="tt-avatar-title">
-                               <a href="#">User {{ .data.User_id.User_id }}</a>
+                               <a href="#"> {{ .data.User_id.User_name }}</a>
                             </div>
                             <a href="#" class="tt-info-time">
                                 <i class="tt-icon"><svg><use xlink:href="#icon-time"></use></svg></i>{{ .data.Post_date }}
@@ -95,7 +109,20 @@
                             {{ .data.Post_description }}
                         </p>
                        
+                        {{ range .comments }}
+                        <p>{{ .Comment_description }} <span>Auteur : {{ .User_id.User_name }}</span> <span>Date : {{ .Comment_date }}</span></p>
+                        {{ end }}
 
+
+                        <button id="showFormButton">Repondre</button>
+                        <form id="responseForm" style="display: none;" action="/post_comment?post={{ .data.Post_id }}&cat={{ .catpost.Cat_id }}" method="post">
+                            <div class="form-group">
+                                <label for="com">Message</label>
+                                <textarea id="com" name="comment" class="form-control" rows="5" placeholder="Lets get started"></textarea>
+                            </div>
+                            <button type="submit">Envoyer</button>
+                        </form>
+                        
                     </div>
                    
                 </div>

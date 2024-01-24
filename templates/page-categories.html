@@ -36,83 +36,62 @@
                 <!-- toggle mobile menu -->
                 <a class="toggle-mobile-menu" href="#">
                     <svg class="tt-icon">
-                      <use xlink:href="#icon-menu_icon"></use>
+                    <use xlink:href="#icon-menu_icon"></use>
                     </svg>
                 </a>
                 <!-- /toggle mobile menu -->
                 <!-- logo -->
                 <div class="tt-logo">
-                    <a href="/forum0"><img src="images/logo.png" alt=""></a>
+                    <a href="/forum"><img src="images/logo.png" alt=""></a>
                 </div>
                 <!-- /logo -->
                 <!-- desctop menu -->
-                 <div class="tt-desktop-menu">
+                <div class="tt-desktop-menu">
                     <nav>
                         <ul>
-                            <li><a href="/categorie0"><span>Categories</span></a></li>
-                            <li><a href="/forum0"><span>Accueil</span></a></li>
-                            
+                            <li><a href="/forum"><span>Accueil</span></a></li>
+                            <li><a href="/categorie"><span>Categories</span></a></li>
                         </ul>
                     </nav>
                 </div>
                 <!-- /desctop menu -->
-               
+            
             </div>
             <div class="col-auto ml-auto">
                 <div class="tt-account-btn">
+                {{if .isAuthenticated }}
+                    <a href="/creat-publication" class="btn btn-secondary">Creer publication</a>
+                    <p style="color: black;">{{.user.User_name}}</p>
+                    <a href="/logout" class="btn btn-secondary">Deconnexion</a>
+                {{else}}
+                    
                     <a href="/register" class="btn btn-primary">S'inscrire</a>
                     <a href="/login" class="btn btn-secondary">Se connecter</a>
 
+                {{end}}
                 </div>
             </div>
         </div>
     </div>
 </header>
-<main id="tt-pageContent" class="tt-offset-small">
-    <div class="container">
-        <div class="tt-topic-list">
-            <div class="tt-list-header">
-                <div class="tt-col-topic">Publication</div>
-                <div class="tt-col-value">Activité</div>
-            </div>
-           
+<main id="tt-pageContent">
+    <div class="tt-custom-mobile-indent container">
+        <div class="tt-categories-list">
+            <div class="row">
             {{ range .data }}
-            
-            <div class="tt-item">
-                <div class="tt-col-avatar">
-                    <svg class="tt-icon">
-                      <use xlink:href="#icon-ava-n"></use>
-                    </svg>
-                    <h6 style="font-size: 13px; margin-left: -10px;" class="tt-title">User {{.User_id.User_id}}</h6>
-                </div>
-                <div class="tt-col-description">
-                    <h6 class="tt-title"><a href="/detail-post0?posts={{ .Post_id }}">
-                        {{.Post_title}}
-                    </a></h6>
-                    <div class="row align-items-center no-gutters  hide-desktope">
-                        <div class="col-11">
-                            <ul class="tt-list-badge">
-                                <li class="show-mobile"><a href="#"><span class="tt-color05 tt-badge">music</span></a></li>
-                            </ul>
-                        </div>
-                        <div class="col-1 ml-auto show-mobile">
-                            <div class="tt-value">1d</div>
+                <div class="col-lg-3">
+                    <div style="background: #4436f8; width: 190px; height: 90px;" class="tt-item">
+                        <div style="font-size: 20px; color: #ffffff; text-align: center;" class="tt-item-header">
+                            <a href="/detail-categorie-post?cat={{ .Cat_id }}"> {{.Cat_name}} </a> 
                         </div>
                     </div>
                 </div>
-                <div class="tt-col-value hide-mobile">{{.Post_date}}</div>
-            </div>
-
             {{ end }}
+            </div>
         </div>
     </div>
-
     <br><br><br>
 </main>
-
-
-
-
 
 </body>
 </html>

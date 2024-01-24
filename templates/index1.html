@@ -1,16 +1,16 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Forum - Responsive HTML5 Template</title>
-    <meta name="keywords" content="HTML5 Template">
-    <meta name="description" content="Forum - Responsive HTML5 Template">
-    <meta name="author" content="Forum">
-    <link rel="shortcut icon" href="favicon/favicon.ico">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="css/style.css">
-</head>
+    <head>
+        <meta charset="utf-8">
+        <title>Forum - Responsive HTML5 Template</title>
+        <meta name="keywords" content="HTML5 Template">
+        <meta name="description" content="Forum - Responsive HTML5 Template">
+        <meta name="author" content="Forum">
+        <link rel="shortcut icon" href="favicon/favicon.ico">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
 <body>
 <!-- tt-mobile menu -->
 <nav class="panel-menu" id="mobile-menu">
@@ -29,6 +29,7 @@
         <div class="mm-backbtn">Back</div>
     </div>
 </nav>
+
 <header id="tt-header">
     <div class="container">
         <div class="row tt-row no-gutters">
@@ -36,7 +37,7 @@
                 <!-- toggle mobile menu -->
                 <a class="toggle-mobile-menu" href="#">
                     <svg class="tt-icon">
-                      <use xlink:href="#icon-menu_icon"></use>
+                    <use xlink:href="#icon-menu_icon"></use>
                     </svg>
                 </a>
                 <!-- /toggle mobile menu -->
@@ -46,31 +47,28 @@
                 </div>
                 <!-- /logo -->
                 <!-- desctop menu -->
-                 <div class="tt-desktop-menu">
+                <div class="tt-desktop-menu">
                     <nav>
                         <ul>
-                            <li><a href="/categorie"><span>Categories</span></a></li>
                             <li><a href="/forum"><span>Accueil</span></a></li>
-                            {{if ne .cookie.Value "authenticated" }}
-                            {{else}}
-                                <li><a href="/creat-publication"><span>New Publication</span></a></li>
-                            {{end}}
-                            
-                           
+                            <li><a href="/categorie"><span>Categories</span></a></li>
                         </ul>
                     </nav>
                 </div>
                 <!-- /desctop menu -->
-               
+            
             </div>
             <div class="col-auto ml-auto">
                 <div class="tt-account-btn">
-                {{if ne .cookie.Value "authenticated" }}
+                {{if .isAuthenticated }}
+                    <a href="/creat-publication" class="btn btn-secondary">Creer publication</a>
+                    <p style="color: black;">{{.user.User_name}}</p>
+                    <a href="/logout" class="btn btn-secondary">Deconnexion</a>
+                {{else}}
+                    
                     <a href="/register" class="btn btn-primary">S'inscrire</a>
                     <a href="/login" class="btn btn-secondary">Se connecter</a>
-                {{else}}
-                    <a href="/creat-publication" class="btn btn-secondary">Creer publication</a>
-                    <a href="/logout" class="btn btn-secondary">Deconnexion</a>
+
                 {{end}}
                 </div>
             </div>
@@ -82,8 +80,9 @@
     <div class="container">
         <div class="tt-topic-list">
             <div class="tt-list-header">
-                <div class="tt-col-topic">Publication</div>
-                <div class="tt-col-value">Activité</div>
+                <div class="tt-col-topic">Publications</div>
+                <div class="tt-col-topi">Categories</div>
+                <div class="tt-col-value">Dates</div>
             </div>
            
             {{ range .data }}
@@ -93,24 +92,24 @@
                     <svg class="tt-icon">
                       <use xlink:href="#icon-ava-n"></use>
                     </svg>
-                    <h6 style="font-size: 13px; margin-left: -10px;" class="tt-title">User {{.User_id.User_id}}</h6>
+                    <h6 style="font-size: 13px; margin-left: -10px;" class="tt-title">{{.Post_id.User_id.User_name}}</h6>
                 </div>
                 <div class="tt-col-description">
-                    <h6 class="tt-title"><a href="/detail-post?posts={{ .Post_id }}">
-                        {{.Post_title}}
+                    <h6 class="tt-title"><a href="/detail-post?posts={{ .Post_id.Post_id }}&cat={{ .Cat_id.Cat_id }}">
+                        {{.Post_id.Post_title}}
                     </a></h6>
-                    <div class="row align-items-center no-gutters  hide-desktope">
+                   
+                </div>
+                <div class="tt-col-topi hide-mobile">
+                    <div class="row align-items-center no-gutters  hide-mobile">
                         <div class="col-11">
                             <ul class="tt-list-badge">
-                                <li class="show-mobile"><a href="#"><span class="tt-color05 tt-badge">music</span></a></li>
+                                <li class="show-desktope"><a href="/detail-categorie-post?cat={{ .Cat_id.Cat_id }}"><span class="tt-color05 tt-badge">{{.Cat_id.Cat_name}}</span></a></li>
                             </ul>
-                        </div>
-                        <div class="col-1 ml-auto show-mobile">
-                            <div class="tt-value">1d</div>
                         </div>
                     </div>
                 </div>
-                <div class="tt-col-value hide-mobile">{{.Post_date}}</div>
+                <div class="tt-col-value hide-mobile">{{.Post_id.Post_date}}</div>
             </div>
 
             {{ end }}
@@ -119,10 +118,6 @@
 
     <br><br><br>
 </main>
-
-
-
-
 
 </body>
 </html>

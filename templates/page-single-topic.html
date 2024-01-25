@@ -98,7 +98,7 @@
                                 <i class="tt-icon"><svg><use xlink:href="#icon-ava-d"></use></svg></i>
                             </div>
                             <div class="tt-avatar-title">
-                               <a href="#"> {{ .data.User_id.User_name }}</a>
+                               <a href="#"><strong> {{ .data.User_id.User_name }} </strong></a>
                             </div>
                             <a href="#" class="tt-info-time">
                                 <i class="tt-icon"><svg><use xlink:href="#icon-time"></use></svg></i>{{ .data.Post_date }}
@@ -123,30 +123,33 @@
 
            
             
-
-            {{ range .comments }}
-            <div class="tt-item">
-                <div style="border-radius: 10px 100px / 120px; background-color: rgba(105, 150, 187, 0.644); color: white" class="tt-single-topic">
-                   <div class="tt-item-header pt-noborder">
-                       <div class="tt-item-info info-top">
-                           <div class="tt-avatar-icon">
-                               <i class="tt-icon"><svg><use xlink:href="#icon-ava-t"></use></svg></i>
-                           </div>
-                           <div class="tt-avatar-title">
-                              <a style="text-decoration: none; color: #0d0d5c ; font-size:larger" href="#"> <strong>{{ .User_id.User_name }}</strong></a>
-                           </div>
-                           <a style="text-decoration: none; color: #0d0d5c ;" href="#" class="tt-info-time">
-                               <i class="tt-icon"><svg><use xlink:href="#icon-time"></use></svg></i>{{ .Comment_date }}
-                           </a>
-                       </div>
-                   </div>
-                   <div class="tt-item-description">
-                    {{ .Comment_description }}
-                   </div>
-               </div>
-           </div>
-           {{ end }}
-
+            {{ if .long_cat }}
+                {{ range .comments }}
+                    <div class="tt-item">
+                        <div style="border-radius: 10px 100px / 120px; background-color: rgba(105, 150, 187, 0.644); color: white" class="tt-single-topic">
+                        <div class="tt-item-header pt-noborder">
+                            <div class="tt-item-info info-top">
+                                <div class="tt-avatar-icon">
+                                    <i class="tt-icon"><svg><use xlink:href="#icon-ava-t"></use></svg></i>
+                                </div>
+                                <div class="tt-avatar-title">
+                                    <a style="text-decoration: none; color: #0d0d5c ; font-size:larger" href="#"> <strong>{{ .User_id.User_name }}</strong></a>
+                                </div>
+                                <a style="text-decoration: none; color: #0d0d5c ;" href="#" class="tt-info-time">
+                                    <i class="tt-icon"><svg><use xlink:href="#icon-time"></use></svg></i>{{ .Comment_date }}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="tt-item-description">
+                            {{ .Comment_description }}
+                        </div>
+                    </div>
+                    </div>
+                {{ end }}
+            {{ else }}
+                <br><br><br>
+                <h5 style="text-align: center;">PAS DE COMMENTAIRE DISPONIBLE</h5>
+            {{ end }}
 
            {{if .isAuthenticated }}
            <br><br>

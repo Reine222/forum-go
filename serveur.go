@@ -639,9 +639,15 @@ func detailPublication(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Println("------------------+++++----------------------", comments)
+	long_cat := false
+	if len(comments) > 0 {
+		long_cat = true
+	}
+	
 	m := map[string]interface{}{
 		"data":   post,
 		"catpost": catpost,
+		"long_cat": long_cat,
 		"comments": comments,
 		"isAuthenticated": isAuthenticated,
 		"user": recup_user,

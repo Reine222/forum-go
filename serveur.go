@@ -212,26 +212,34 @@ func insertUsers(w http.ResponseWriter, r *http.Request) {
 		user_name := r.FormValue("nom")
 		user_email := r.FormValue("email")
 		pass := r.FormValue("password")
+		repass := r.FormValue("repassword")
 		passs := []byte(pass)
+
+		verif_email, _ := userExists(db, user_email)
+
+		if verif_email || repass != pass {
+			http.Redirect(w, r, "/register", http.StatusSeeOther)
+		} else {
+
 		// Hashing the password
-		user_password, err := bcrypt.GenerateFromPassword(passs, bcrypt.DefaultCost)
-		if err != nil {
-			panic(err)
+			user_password, err := bcrypt.GenerateFromPassword(passs, bcrypt.DefaultCost)
+			if err != nil {
+				panic(err)
+			}
+			fmt.Println(user_name, user_email, user_password)
+			register := "INSERT INTO T_UTILISATEUR_USER (user_name, user_email, user_password) VALUES (?,?,?)"
+			_, errr := db.Exec(register, user_name, user_email, user_password)
+			if errr != nil {
+				fmt.Println("Erreur lors de l'insertion dans la table users:", err)
+				return
+			}
+
+			fmt.Println("Insertion réussie !")
+			defer db.Close()
+			fmt.Println("************************************** SUCCES *************************************")
+
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
 		}
-		fmt.Println(user_name, user_email, user_password)
-		register := "INSERT INTO T_UTILISATEUR_USER (user_name, user_email, user_password) VALUES (?,?,?)"
-		_, errr := db.Exec(register, user_name, user_email, user_password)
-		if errr != nil {
-			fmt.Println("Erreur lors de l'insertion dans la table users:", err)
-			return
-		}
-
-		fmt.Println("Insertion réussie !")
-		defer db.Close()
-		fmt.Println("************************************** SUCCES *************************************")
-
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
-
 	}
 
 }

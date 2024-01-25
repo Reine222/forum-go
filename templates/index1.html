@@ -62,16 +62,20 @@
                 <div class="tt-account-btn">
                 {{if .isAuthenticated }}
                     <a href="/creat-publication" class="btn btn-secondary">Creer publication</a>
-                    <p style="color: black;">{{.user.User_name}}</p>
-                    <a href="/logout" class="btn btn-secondary">Deconnexion</a>
+                    <a style="background-color: red; color: white" href="/logout" class="btn btn-secondary">Deconnexion</a>
                 {{else}}
-                    
                     <a href="/register" class="btn btn-primary">S'inscrire</a>
                     <a href="/login" class="btn btn-secondary">Se connecter</a>
-
                 {{end}}
                 </div>
             </div>
+            {{if .isAuthenticated }}
+            <div class="col-auto ml-auto">
+                <div class="tt-user-info d-flex justify-content-center">
+                    <h3>{{.user.User_name}}</h3> 
+               </div>
+           </div>
+           {{end}}
         </div>
     </div>
 </header>
@@ -79,41 +83,45 @@
 <main id="tt-pageContent" class="tt-offset-small">
     <div class="container">
         <div class="tt-topic-list">
-            <div class="tt-list-header">
 
-                <div class="tt-col-topic">Auteur</div>
-                <div class="tt-col-value hide-mobile">Categories</div>
-                <div class="tt-col-value">Dates</div>
-            </div>
-           
-            {{ range .data }}
+            {{ if .long }}
+                <div class="tt-list-header">
+
+                    <div class="tt-col-topic">Auteur</div>
+                    <div class="tt-col-value hide-mobile">Categories</div>
+                    <div class="tt-col-value">Dates</div>
+                </div>
             
-            <div class="tt-item">
-                <div class="tt-col-avatar">
-                    <svg class="tt-icon">
-                      <use xlink:href="#icon-ava-n"></use>
-                    </svg>
-                    <h6 style="font-size: 13px; margin-left: -10px;" class="tt-title">{{.User_id.User_name}}</h6>
-                </div>
-                <div class="tt-col-description">
-                    <h6 class="tt-title"><a href="/detail-post?posts={{ .Post_id }}&cat={{ .Cat_id }}">
-                        {{.Post_title}}
-                    </a></h6>
-                   
-                </div>
-                <div class="tt-col-topi hide-mobile">
-                    <div class="row align-items-center no-gutters  hide-mobile">
-                        <div class="col-11">
-                            <ul class="tt-list-badge">
-                                <li class="show-desktope"><a href="/detail-categorie-post?cat={{ .Cat_id }}"><span class="tt-color0{{ .Cat_id }} tt-badge">{{.Cat_name}}</span></a></li>
-                            </ul>
+                {{ range .data }}
+                <div class="tt-item">
+                    <div class="tt-col-avatar">
+                        <svg class="tt-icon">
+                        <use xlink:href="#icon-ava-n"></use>
+                        </svg>
+                        <h6 style="font-size: 13px; margin-left: -10px;" class="tt-title">{{.User_id.User_name}}</h6>
+                    </div>
+                    <div class="tt-col-description">
+                        <h6 class="tt-title"><a href="/detail-post?posts={{ .Post_id }}&cat={{ .Cat_id }}">
+                            {{.Post_title}}
+                        </a></h6>
+                    
+                    </div>
+                    <div class="tt-col-topi hide-mobile">
+                        <div class="row align-items-center no-gutters  hide-mobile">
+                            <div class="col-11">
+                                <ul class="tt-list-badge">
+                                    <li class="show-desktope"><a href="/detail-categorie-post?cat={{ .Cat_id }}"><span class="tt-color0{{ .Cat_id }} tt-badge">{{.Cat_name}}</span></a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
+                    <div class="tt-col-value hide-mobile">{{.Post_date}}</div>
                 </div>
-                <div class="tt-col-value hide-mobile">{{.Post_date}}</div>
-            </div>
-            
+                {{ end }}
 
+            {{ else }}
+                <br><br><br>
+                <h3 style="text-align: center;">PAS DE PUBLICATION DISPONIBLE</h3>
             {{ end }}
         </div>
     </div>

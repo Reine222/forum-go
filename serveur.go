@@ -173,9 +173,15 @@ func home(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Println("----------------------------------------", all_pub)
+	long := false
+	if len(all_pub) > 0 {
+		long = true
+	}
+	
 
 	m := map[string]interface{}{
 		"data":   all_pub,
+		"long": long,
 		"isAuthenticated": isAuthenticated,
 		"user": recup_user,
 	}
@@ -727,10 +733,15 @@ func detailCatPublication(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Println("----------------------------------------", all_pub)
+	long := false
+	if len(all_pub) > 0 {
+		long = true
+	}
 
 	m := map[string]interface{}{
 		"data":   all_pub,
 		"catp":   catp,
+		"long": long,
 		"isAuthenticated": isAuthenticated,
 		"user": recup_user,
 	}

@@ -10,6 +10,45 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="css/style.css">
+        <style>
+              
+              .labelb {
+                padding: 4px 6px;
+                line-height: 190%;
+                outline-style: none;
+                transition: all .6s;
+              }
+              
+              .hiddenCB div {
+                display: inline;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+              }
+              
+              .hiddenCB input[type="checkbox"],
+              .hiddenCB input[type="radio"] {
+                display: none;
+                
+              }
+              
+              .hiddenCB label {
+                
+                cursor: pointer;
+              }
+              
+              .hiddenCB input[type="checkbox"]+label:hover{
+                background: rgba(0, 128, 128, .8);
+              }
+              
+              .hiddenCB input[type="checkbox"]:checked+label {
+                background: rgba(0, 128, 128, .4);
+              }
+              
+              .hiddenCB input[type="checkbox"]:checked+label:hover{
+                background: rgba(0, 128, 128, 0, .7);
+              }
+        </style>
     </head>
 
 
@@ -63,16 +102,20 @@
                 <div class="tt-account-btn">
                 {{if .isAuthenticated }}
                     <a href="/creat-publication" class="btn btn-secondary">Creer publication</a>
-                    <p style="color: black;">{{.user.User_name}}</p>
-                    <a href="/logout" class="btn btn-secondary">Deconnexion</a>
+                    <a style="background-color: red; color: white" href="/logout" class="btn btn-secondary">Deconnexion</a>
                 {{else}}
-                    
                     <a href="/register" class="btn btn-primary">S'inscrire</a>
                     <a href="/login" class="btn btn-secondary">Se connecter</a>
-
                 {{end}}
                 </div>
             </div>
+            {{if .isAuthenticated }}
+            <div class="col-auto ml-auto">
+                <div class="tt-user-info d-flex justify-content-center">
+                    <h3>{{.user.User_name}}</h3> 
+               </div>
+           </div>
+           {{end}}
         </div>
     </div>
 </header>
@@ -84,21 +127,24 @@
             </h1>
             <form action="/post_publication" method="post" class="form-default form-create-topic">
                 <div class="form-group">
-                    <label for="inputTopicTitle">Titre</label>
+                    <h3>Titre</h3>
                     <div class="tt-value-wrapper">
                         <input type="text" name="titre" class="form-control" id="inputTopicTitle" placeholder="">
                     </div>
                 </div>
-                <div class="form-group">
-                    <h3>Catégories</h3>
+
+                <br><br>
+                <h3>Catégories</h3>
+                <div class="hiddenCB">
+                    <div>
                     {{ range .all_cat }}
-                    <input type="checkbox" name="selectedCat" value="{{ .Cat_id }}">{{ .Cat_name }}
+                      <input type="checkbox" value="{{ .Cat_id }}" name="selectedCat" id="cb{{ .Cat_id }}" /><label class="labelb" for="cb{{ .Cat_id }}">{{ .Cat_name }}</label>
                     {{ end }}
-                </div> 
-                
+                    </div>
+                </div>
                 
                 <div class="form-group">
-                    <br><br><br><br>
+                    <br><br>
                     <h3 class="pt-title">Description</h3>
 
                     <div class="form-group">
